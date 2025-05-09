@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Cet exercice vous permettra de comprendre comment le C gère les opérations entre différents types de variables. En C, lorsque vous effectuez des opérations entre variables de types différents, le compilateur applique des règles de conversion implicites (ou "promotion de type") pour garantir que les calculs s'effectuent correctement. Comprendre ces règles est essentiel pour éviter des erreurs subtiles et des comportements inattendus dans vos programmes.
+Cet exercice vous permettra de comprendre comment le C gère les opérations entre différents types de variables. En C, lorsque vous effectuez des opérations entre variables de types différents, le compilateur applique des règles de conversion implicites (ou "promotion de type") pour garantir que les calculs s'effectuent correctement.
 
 ## Exercice
 
@@ -71,27 +71,68 @@ Modifiez votre programme pour :
    - Le reste de la division (`a % b`)
 3. Effectuez la même série de calculs avec les valeurs -17 et 5 pour `a` et `b`, et observez les différences
 
-## Résultat Attendu
+### Partie 4 : Calculatrice interactive avec entrées utilisateur
+
+Créez maintenant une calculatrice simple qui :
+
+1. Demande à l'utilisateur d'entrer deux valeurs :
+
+   - Un nombre entier (`int_input`)
+   - Un nombre à virgule flottante (`float_input`)
+
+2. Utilise la fonction `scanf()` pour lire ces entrées. Voici un exemple de code :
+
+   ```c
+   int int_input;
+   float float_input;
+
+   printf("Entrez un nombre entier : ");
+   scanf("%d", &int_input);
+
+   printf("Entrez un nombre à virgule flottante : ");
+   scanf("%f", &float_input);
+   ```
+
+3. Effectue les opérations arithmétiques suivantes et affiche les résultats :
+
+   - Addition : `int_input + float_input`
+   - Soustraction : `float_input - int_input`
+   - Multiplication : `int_input * float_input`
+   - Division : `float_input / int_input`
+   - Division entière : `int_input / (int)float_input`
+   - Modulo (après conversion) : `int_input % (int)float_input`
+
+4. Pour chaque opération :
+
+   - Affichez l'opération effectuée (par exemple : "12 + 3.5 = 15.50")
+   - Indiquez le type du résultat
+   - Pour la division entière et le modulo, expliquez brièvement pourquoi la conversion est nécessaire
+
+5. Ajoutez une gestion d'erreur simple :
+   - Vérifiez si la partie entière de `float_input` est 0 avant d'effectuer la division entière et le modulo
+   - Si c'est le cas, affichez un message d'erreur approprié au lieu d'effectuer l'opération
+
+## Résultat attendu
 
 Votre programme doit afficher un résultat similaire à celui-ci :
 
 ```
 PARTIE 1: OPÉRATIONS ENTRE TYPES DIFFÉRENTS
-entier (10) + flottant (3.5) = 13.50 (type: float)
-entier (10) * flottant (3.5) = 35.00 (type: float)
-entier (10) + caractere ('A' = 65) = 75 (type: int)
-flottant (3.5) / entier (10) = 0.35 (type: float)
-entier_court (100) * caractere ('A' = 65) = 6500 (type: int)
+int_var (10) + float_var (3.5) = 13.50 (type: float)
+int_var (10) * float_var (3.5) = 35.00 (type: float)
+int_var (10) + char_var ('A' = 65) = 75 (type: int)
+float_var (3.5) / int_var (10) = 0.35 (type: float)
+short_var (100) * char_var ('A' = 65) = 6500 (type: int)
 
 PARTIE 2: CONVERSIONS EXPLICITES
-entier + flottant = 13.50 (sans cast)
-entier + (int)flottant = 13 (avec cast de flottant en int)
+int_var + float_var = 13.50 (sans cast)
+int_var + (int)float_var = 13 (avec cast de float_var en int)
 
-entier * flottant = 35.00 (sans cast)
-entier * (float)caractere = 650.00 (avec cast de caractere en float)
+int_var * float_var = 35.00 (sans cast)
+int_var * (float)char_var = 650.00 (avec cast de char_var en float)
 
-entier / entier_court = 0 (division entière)
-(float)entier / entier_court = 0.10 (avec cast pour division flottante)
+int_var / short_var = 0 (division entière)
+(float)int_var / short_var = 0.10 (avec cast pour division flottante)
 
 PARTIE 3: DIVISION ENTIÈRE ET MODULO
 a = 17, b = 5
@@ -103,6 +144,25 @@ a = -17, b = 5
 a / b = -3 (division entière avec négatif)
 (float)a / b = -3.40 (division flottante avec négatif)
 a % b = -2 (reste de la division avec négatif)
+
+PARTIE 4: CALCULATRICE INTERACTIVE
+Entrez un nombre entier : 42
+Entrez un nombre à virgule flottante : 7.5
+
+RÉSULTATS DES OPÉRATIONS :
+Addition : 42 + 7.50 = 49.50 (type: float)
+Soustraction : 7.50 - 42 = -34.50 (type: float)
+Multiplication : 42 * 7.50 = 315.00 (type: float)
+Division : 7.50 / 42 = 0.18 (type: float)
+Division entière : 42 / 7 = 6 (type: int) - La partie décimale est tronquée après conversion
+Modulo : 42 % 7 = 0 (type: int) - Le modulo nécessite des opérandes entiers
+```
+
+Si l'utilisateur entre 0 ou un nombre dont la partie entière est 0 comme deuxième nombre :
+
+```
+Division entière : Impossible - Division par zéro non autorisée
+Modulo : Impossible - Opération modulo par zéro non autorisée
 ```
 
 ## Astuces
@@ -112,13 +172,14 @@ a % b = -2 (reste de la division avec négatif)
 - Une division entre deux entiers donne toujours un résultat entier (la partie fractionnaire est tronquée).
 - Le modulo (`%`) ne fonctionne qu'avec des opérandes entiers.
 - Attention au comportement du modulo avec des nombres négatifs, qui peut varier selon les compilateurs.
+- Pour `scanf()`, n'oubliez pas d'utiliser l'opérateur `&` devant les variables pour passer leur adresse mémoire.
+- Pour vérifier si un nombre à virgule flottante a une partie entière égale à zéro, vous pouvez utiliser la conversion : `(int)float_input == 0`
 
-## Pour Aller Plus Loin
+## Pour aller plus Loin
 
 - Explorez les effets de débordement (overflow) lorsque le résultat d'une opération dépasse la capacité du type.
 - Étudiez les conséquences des conversions implicites sur la précision des calculs (notamment avec `float` et `double`).
-- Découvrez les types de taille fixe de la bibliothèque `<stdint.h>` comme `int32_t` et explorez comment ils interagissent dans les opérations mixtes.
-- Investiguer les problèmes de précision lors de comparaisons de valeurs à virgule flottante.
+- Ajoutez une gestion d'erreur plus robuste, par exemple en vérifiant si `scanf()` a réussi à lire les entrées.
 
 ---
 
