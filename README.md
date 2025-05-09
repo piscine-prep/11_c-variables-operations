@@ -149,7 +149,7 @@ PARTIE 4: CALCULATRICE INTERACTIVE
 Entrez un nombre entier : 42
 Entrez un nombre à virgule flottante : 7.5
 
-RÉSULTATS DES OPÉRATIONS :
+EXEMPLES DE RÉSULTATS DES OPÉRATIONS :
 Addition : 42 + 7.50 = 49.50 (type: float)
 Soustraction : 7.50 - 42 = -34.50 (type: float)
 Multiplication : 42 * 7.50 = 315.00 (type: float)
